@@ -1,22 +1,25 @@
 import pyxel
-from personajes import Mario
+from personajes import Personaje, Mario, Luigi
 
 class Tablero:
 
-    def __init__(self):
+    def __init__(self, ancho: int, alto: int):
+        # definimos los atributos
+        self.ancho = ancho
+        self.alto = alto
         # crea el tablero
-        pyxel.init(950, 650, title='Mario Bross')
+        pyxel.init(self.ancho, self.alto, title='Mario Bross')
         # accede al recurso de pyxres donde tenemos todos los sprites
         pyxel.load('my_resource.pyxres')
 
-        # crea el atributo mario
-        self.mario = Mario(100, 100, 0, 0, 0)
+        # crea una instancia del objeto Mario en las coordenadas indicadas
+        self.mario = Mario(100, 100)
 
         # inicia el programa
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.mario.update()
+        pass
 
     def draw(self):
         # borra _todo lo que había antes
@@ -24,4 +27,3 @@ class Tablero:
         # usamos el método_ draw de mario
         self.mario.draw()
 
-Tablero()
