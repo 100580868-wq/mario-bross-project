@@ -1,5 +1,5 @@
 import pyxel
-from personajes import Mario
+from personajes import Personaje, Mario, Luigi
 
 class Tablero:
 
