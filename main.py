@@ -1,5 +1,7 @@
 import pyxel
-
+import constantes
 from tablero import Tablero
 
-Tablero()
+
+mi_tablero = Tablero(constantes.ANCHO, constantes.ALTO)
+mi_tablero.draw()
