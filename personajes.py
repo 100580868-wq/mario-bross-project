@@ -26,16 +26,16 @@ class Personaje:
     def x(self, valor_x):
         if type(valor_x) != int:
             raise TypeError('el valor de las coordenadas deben ser enteros')
-        if not 0 < valor_x < constantes.ANCHO - 16:
-            raise ValueError('el valor de la coordenada x debe estar entre 0 y 500')
+        if not 0 < valor_x < constantes.ANCHO - 8:
+            raise ValueError(f'el valor de la coordenada x debe estar entre {0} y {constantes.ANCHO - 8}')
         self._x = valor_x
 
     @y.setter
     def y(self, valor_y):
         if type(valor_y) != int:
             raise TypeError('el valor de las coordenadas deben ser enteros')
-        if not 0 < valor_y < constantes.ALTO - 16:
-            raise ValueError('el valor de la coordenada y debe estar entre 0 y 500')
+        if not 0 < valor_y < constantes.ALTO - 8:
+            raise ValueError(f'el valor de la coordenada y debe estar entre {0} y {constantes.ALTO - 8}')
         self._y = valor_y
 
 
@@ -59,7 +59,7 @@ class Mario(Personaje):
         pass
 
     def draw(self):
-        pyxel.blt(self.x, self.y, *self.sprite, scale=3)
+        pyxel.blt(self.x, self.y, *self.sprite)
 
     def mover(self):
         pass
@@ -77,7 +77,7 @@ class Luigi(Personaje):
         pass
 
     def draw(self):
-        pyxel.blt(self.x, self.y, *self.sprite, scale = 3)
+        pyxel.blt(self.x, self.y, *self.sprite)
 
     def mover(self):
         pass

@@ -1,9 +1,11 @@
 import pyxel
-
 import constantes
 from personajes import Personaje, Mario, Luigi
 from constantes import *
 from plataformas import Plataforma
+from cintas import Cinta
+from escenario import Escenario
+
 
 class Tablero:
 
@@ -22,10 +24,7 @@ class Tablero:
         # creamos una instancia del objeto Luigi en las coordenadas indicadas
         self.luigi = Luigi(constantes.X_INICIAL_LUIGI, constantes.Y_INICIAL_LUIGI)
 
-        # creamos una lista con las instancias de la clase Plataforma de cada una de las plataformas individuales que vamos a mostrar en el juego
-        self.lista_plataformas = []
-        for elemento in constantes.LISTA_PLATAFORMAS:
-            self.lista_plataformas.append(Plataforma(*elemento))
+        self.escenario = Escenario()
 
         # crea el tablero
         pyxel.init(self.ancho, self.alto, title='Mario Bross')
@@ -50,16 +49,16 @@ class Tablero:
     def ancho(self, nuevo_valor):
         if type(nuevo_valor) != int:
             raise TypeError('el ancho debe de ser un entero')
-        if not 500 < nuevo_valor < 1500:
-            raise ValueError(f'el ancho debe de estar entre 500 y 1000: {nuevo_valor}')
+        if not 0 < nuevo_valor < 500:
+            raise ValueError(f'el ancho debe de estar entre 0 y 500: {nuevo_valor}')
         self._ancho = nuevo_valor
 
     @alto.setter
     def alto(self, nuevo_valor):
         if type(nuevo_valor) != int:
             raise TypeError('el alto debe de ser un entero')
-        if not 500 < nuevo_valor < 1500:
-            raise ValueError(f'el alto debe de estar entre 500 y 1000: {nuevo_valor}')
+        if not 0 < nuevo_valor < 500:
+            raise ValueError(f'el alto debe de estar entre 0 y 500: {nuevo_valor}')
         self._alto = nuevo_valor
 
 
@@ -69,6 +68,7 @@ class Tablero:
         aquí añadimos lo que el programa debe de hacer en el caso de que se pulse una tecla en concreto
         y todas las llamadas a las funciones características de cada personaje.
         '''
+
 
         # para cerrar el juego:
         if pyxel.btnp(pyxel.KEY_Q):
@@ -85,62 +85,4 @@ class Tablero:
 
         self.mario.draw()
         self.luigi.draw()
-        for plataforma in self.lista_plataformas:
-            plataforma.draw()
-
-# TODO
-class Menu_Dificultad:
-
-    def __init__(self, ancho: int, alto: int):
-        # definimos los atributos
-        self.ancho = ancho
-        self.alto = alto
-        # crea el tablero
-        pyxel.init(self.ancho, self.alto, title='Mario Bross')
-        # accede al recurso de pyxres donde tenemos todos los sprites
-        pyxel.load('assets/assets.pyxres')
-
-        # inicia el programa
-        pyxel.run(self.update, self.draw)
-
-
-    # properties y setters
-    @property
-    def ancho(self) -> int:
-        return self._ancho
-
-    @property
-    def alto(self) -> int:
-        return self._alto
-
-    @ancho.setter
-    def ancho(self, nuevo_valor):
-        if type(nuevo_valor) != int:
-            raise TypeError('el ancho debe de ser un entero')
-        if not 200 < nuevo_valor < 8000:
-            raise ValueError('el ancho debe de estar entre el 500 y el 1000')
-        self._ancho = nuevo_valor
-
-    @alto.setter
-    def alto(self, nuevo_valor):
-        if type(nuevo_valor) != int:
-            raise TypeError('el alto debe de ser un entero')
-        if not 200 < nuevo_valor < 8000:
-            raise ValueError('el alto debe de estar entre el 500 y el 1000')
-        self._alto = nuevo_valor
-
-
-    def update(self):
-
-        if pyxel.btnp(pyxel.KEY_1):
-            DIFICULTAD = 0
-            pyxel.quit()
-        if pyxel.btnp(pyxel.KEY_2):
-            DIFICULTAD = 1
-            pyxel.quit()
-        if pyxel.btnp(pyxel.KEY_3):
-            DIFICULTAD = 2
-            pyxel.quit()
-        if pyxel.btnp(pyxel.KEY_4):
-            DIFICULTAD = 3
-            pyxel.quit()
+        self.escenario.draw()

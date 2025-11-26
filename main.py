@@ -4,4 +4,3 @@ from tablero import Tablero
 
 
 mi_tablero = Tablero(constantes.ANCHO, constantes.ALTO)
-mi_tablero.draw()
