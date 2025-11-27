@@ -54,16 +54,26 @@ class Mario(Personaje):
         super().__init__(x, y)
 
         self.sprite = constantes.SPRITE_MARIO
-
+        self.piso_actual = 1
     def update(self):
         pass
 
     def draw(self):
-        pyxel.blt(self.x, self.y, *self.sprite)
+        if self.piso_actual == 1:
+            pyxel.blt(self.x, self.y, *constantes.SPRITE_MARIO_PISO_1, 14)
+        else:
+            pyxel.blt(self.x, self.y, *self.sprite, 14)
 
-    def mover(self):
-        pass
+    def mover(self, direccion):
 
+        # Mario se mueve en los pisos impares
+        if direccion == 'arriba' and self.piso_actual != 3:
+            self.y -= 25
+            self.piso_actual += 1
+
+        if direccion == 'abajo' and self.piso_actual != 1:
+            self.y += 25
+            self.piso_actual -= 1
 
 class Luigi(Personaje):
 
@@ -72,12 +82,20 @@ class Luigi(Personaje):
         super().__init__(x, y)
 
         self.sprite = constantes.SPRITE_LUIGI
+        self.piso_actual = 1
 
     def update(self):
         pass
 
     def draw(self):
-        pyxel.blt(self.x, self.y, *self.sprite)
+        pyxel.blt(self.x, self.y, *self.sprite, 14)
 
-    def mover(self):
-        pass
+    def mover(self, direccion):
+        # Luigi se mueve en los pisos impares
+        if direccion == 'arriba' and self.piso_actual != 3:
+            self.y -= 32
+            self.piso_actual += 1
+
+        if direccion == 'abajo' and self.piso_actual != 1:
+            self.y += 32
+            self.piso_actual -= 1

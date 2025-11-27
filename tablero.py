@@ -17,6 +17,9 @@ class Tablero:
         # definimos los atributos
         self.ancho = ancho
         self.alto = alto
+        self.contador_animacion = 0
+        self.dificultad_seleccionada = False
+        self.nivel_dificultad = 0
 
         # creamos una instancia del objeto Mario en las coordenadas indicadas
         self.mario = Mario(constantes.X_INICIAL_MARIO, constantes.Y_INICIAL_MARIO)
@@ -49,16 +52,16 @@ class Tablero:
     def ancho(self, nuevo_valor):
         if type(nuevo_valor) != int:
             raise TypeError('el ancho debe de ser un entero')
-        if not 0 < nuevo_valor < 500:
-            raise ValueError(f'el ancho debe de estar entre 0 y 500: {nuevo_valor}')
+        if not 0 < nuevo_valor < 5000:
+            raise ValueError(f'el ancho debe de estar entre 0 y 5000: {nuevo_valor}')
         self._ancho = nuevo_valor
 
     @alto.setter
     def alto(self, nuevo_valor):
         if type(nuevo_valor) != int:
             raise TypeError('el alto debe de ser un entero')
-        if not 0 < nuevo_valor < 500:
-            raise ValueError(f'el alto debe de estar entre 0 y 500: {nuevo_valor}')
+        if not 0 < nuevo_valor < 5000:
+            raise ValueError(f'el alto debe de estar entre 0 y 5000: {nuevo_valor}')
         self._alto = nuevo_valor
 
 
@@ -74,6 +77,41 @@ class Tablero:
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
+        # para elegir la dificultad:
+        if not self.dificultad_seleccionada:
+            if pyxel.btnp(pyxel.KEY_1):
+                self.nivel_dificultad = 0
+                self.dificultad_seleccionada = True
+            if pyxel.btnp(pyxel.KEY_2):
+                self.nivel_dificultad = 1
+                self.dificultad_seleccionada = True
+            if pyxel.btnp(pyxel.KEY_3):
+                self.nivel_dificultad = 2
+                self.dificultad_seleccionada = True
+            if pyxel.btnp(pyxel.KEY_4):
+                self.nivel_dificultad = 3
+                self.dificultad_seleccionada = True
+            return
+
+        self.contador_animacion += 1
+        if self.contador_animacion == 8:
+            self.contador_animacion = 0
+
+        # para mover a Mario
+        if pyxel.btnp(pyxel.KEY_UP):
+            self.mario.mover('arriba')
+
+        if pyxel.btnp(pyxel.KEY_DOWN):
+            self.mario.mover('abajo')
+
+        # para mover a Mario
+        if pyxel.btnp(pyxel.KEY_W):
+            self.luigi.mover('arriba')
+
+        if pyxel.btnp(pyxel.KEY_S):
+            self.luigi.mover('abajo')
+
+
     def draw(self):
         '''
         este método se llama 30 veces por segundo al igual que update, la diferencia esque este método
@@ -83,6 +121,16 @@ class Tablero:
         # borra _todo lo que había antes
         pyxel.cls(0)
 
+        # primero el usuario debe de elegir la dificultad, para ello mostramos el menú de dificultad:
+        if not self.dificultad_seleccionada:
+            pyxel.bltm(0, 0, 1, 0, 0, constantes.ANCHO, constantes.ALTO)
+            pyxel.text(constantes.ANCHO // 3, 20, 'elige la dificultad', 7)
+            pyxel.text(constantes.ANCHO // 3, 50, 'nivel: facil -> pulsa 1', 7)
+            pyxel.text(constantes.ANCHO // 3, 70, 'nivel: medio -> pulsa 2', 7)
+            pyxel.text(constantes.ANCHO // 3, 90, 'nivel: extremo -> pulsa 3', 7)
+            pyxel.text(constantes.ANCHO // 3, 110, 'nivel: crazy -> pulsa 4', 7)
+            return
+
+        self.escenario.draw(self)
         self.mario.draw()
         self.luigi.draw()
-        self.escenario.draw()
