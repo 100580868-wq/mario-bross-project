@@ -5,6 +5,7 @@ from constantes import *
 from plataformas import Plataforma
 from cintas import Cinta
 from escenario import Escenario
+from paquetes import Paquete
 
 
 class Tablero:
@@ -20,6 +21,7 @@ class Tablero:
         self.contador_animacion = 0
         self.dificultad_seleccionada = False
         self.nivel_dificultad = 0
+        self.paquete_perdido = False
 
         # creamos una instancia del objeto Mario en las coordenadas indicadas
         self.mario = Mario(constantes.X_INICIAL_MARIO, constantes.Y_INICIAL_MARIO)
@@ -27,8 +29,11 @@ class Tablero:
         # creamos una instancia del objeto Luigi en las coordenadas indicadas
         self.luigi = Luigi(constantes.X_INICIAL_LUIGI, constantes.Y_INICIAL_LUIGI)
 
+        # creamos una instancia de la clase Escenario
         self.escenario = Escenario()
 
+
+        self.paquete = Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES)
         # crea el tablero
         pyxel.init(self.ancho, self.alto, title='Mario Bross')
 
@@ -99,17 +104,26 @@ class Tablero:
 
         # para mover a Mario
         if pyxel.btnp(pyxel.KEY_UP):
-            self.mario.mover('arriba')
+            self.mario.mover('arriba', self)
 
         if pyxel.btnp(pyxel.KEY_DOWN):
-            self.mario.mover('abajo')
+            self.mario.mover('abajo', self)
 
-        # para mover a Mario
+        # para mover a Luigi
         if pyxel.btnp(pyxel.KEY_W):
-            self.luigi.mover('arriba')
+            self.luigi.mover('arriba', self)
 
         if pyxel.btnp(pyxel.KEY_S):
-            self.luigi.mover('abajo')
+            self.luigi.mover('abajo', self)
+
+        if self.paquete.estado == 'moviendose':
+            self.paquete.mover_x(self)
+            self.paquete.mover_y(self.mario, self.luigi)
+
+        else:
+            self.paquete_perdido = True
+
+
 
 
     def draw(self):
@@ -131,6 +145,16 @@ class Tablero:
             pyxel.text(constantes.ANCHO // 3, 110, 'nivel: crazy -> pulsa 4', 7)
             return
 
+
         self.escenario.draw(self)
         self.mario.draw()
         self.luigi.draw()
+
+        if self.paquete.paquetes_en_juego < constantes.PAQUETES_MINIMOS[self.nivel_dificultad]:
+            self.paquete.draw()
+
+        # TODO
+        if self.paquete_perdido:
+            pass
+
+        pyxel.bltm(0 , 0, *constantes.COLUMNA_SPRITE[self.nivel_dificultad])

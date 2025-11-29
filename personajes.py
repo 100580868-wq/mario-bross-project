@@ -39,14 +39,6 @@ class Personaje:
         self._y = valor_y
 
 
-    def update(self):
-        pass
-
-
-    def draw(self):
-        pass
-
-
 class Mario(Personaje):
 
     def __init__(self, x, y):
@@ -64,16 +56,18 @@ class Mario(Personaje):
         else:
             pyxel.blt(self.x, self.y, *self.sprite, 14)
 
-    def mover(self, direccion):
+    def mover(self, direccion, tablero):
 
         # Mario se mueve en los pisos impares
-        if direccion == 'arriba' and self.piso_actual != 3:
-            self.y -= 25
-            self.piso_actual += 1
+        if direccion == 'arriba' and self.piso_actual != constantes.PISO_LIMITE_MARIO[tablero.nivel_dificultad]:
+                self.y -= 28
+                self.piso_actual += 2
 
         if direccion == 'abajo' and self.piso_actual != 1:
-            self.y += 25
-            self.piso_actual -= 1
+                self.y += 28
+                self.piso_actual -= 2
+
+
 
 class Luigi(Personaje):
 
@@ -82,7 +76,7 @@ class Luigi(Personaje):
         super().__init__(x, y)
 
         self.sprite = constantes.SPRITE_LUIGI
-        self.piso_actual = 1
+        self.piso_actual = 2
 
     def update(self):
         pass
@@ -90,12 +84,13 @@ class Luigi(Personaje):
     def draw(self):
         pyxel.blt(self.x, self.y, *self.sprite, 14)
 
-    def mover(self, direccion):
-        # Luigi se mueve en los pisos impares
-        if direccion == 'arriba' and self.piso_actual != 3:
-            self.y -= 32
-            self.piso_actual += 1
+    def mover(self, direccion, tablero):
 
-        if direccion == 'abajo' and self.piso_actual != 1:
+        # Luigi se mueve en los pisos pares
+        if direccion == 'arriba' and self.piso_actual != constantes.PISO_LIMITE_LUIGI[tablero.nivel_dificultad]:
+            self.y -= 32
+            self.piso_actual += 2
+
+        if direccion == 'abajo' and self.piso_actual != 2:
             self.y += 32
-            self.piso_actual -= 1
+            self.piso_actual -= 2

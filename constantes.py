@@ -17,9 +17,9 @@ la estructura es (banco_imagen, coordenada x en el image bank, coordenada y en e
 '''
 # protagonistas
 X_INICIAL_MARIO = 264
-Y_INICIAL_MARIO = 229
+Y_INICIAL_MARIO = 232
 
-LIMITES_MOVIMIENTO_MARIO = ()
+
 # estructura: (img bank, u, v, w, h)
 SPRITE_MARIO = (1, 48, 16, 16, 16)
 SPRITE_MARIO_PISO_1 = (1, 48, 0, 16, 16)
@@ -27,7 +27,65 @@ SPRITE_MARIO_PISO_1 = (1, 48, 0, 16, 16)
 
 X_INICIAL_LUIGI = 104
 Y_INICIAL_LUIGI = 221
+
+
 SPRITE_LUIGI = (1, 64, 0, 16, 16)
 SPRITE_LUIGI_PISO_3 = (1, 64, 16, 16, 16)
 
-LIMITES_MOVIMIENTO_LUIGI = ()
+
+PISO_LIMITE_MARIO = (5, 7, 9, 5)
+PISO_LIMITE_LUIGI = (6, 8, 10, 5)
+
+
+# paquetes
+X_INICIAL_PAQUETES = 324
+Y_INICIAL_PAQUETES = 238
+SPRITE_PAQUETES = (1, 72, 128, 8, 8)
+PAQUETES_MINIMOS = (1, 1, 1, 1)
+PISOS_IMPARES = ((3,5), (3,5,7), (3,5,7,9), (3,5))
+PISOS_PARES = ((2,4,6), (2,4,6,8), (2,4,6,8,10), (2,4,6))
+
+# escenario
+# hemos creado por cada nivel 4 escenarios distintos que se van intercalando para dar efecto de movimiento
+ESCENARIO_NIVEL_1 = (
+
+        (32 * 8,  80 * 8),
+        (32 * 8,  128 * 8),
+        (32 * 8,  168 * 8),
+        (32 * 8,  208 * 8)
+)
+
+ESCENARIO_NIVEL_2 = (
+
+    (88 * 8,  80 * 8),
+    (88 * 8,  128 * 8),
+    (88 * 8,  168 * 8),
+    (88 * 8,  208 * 8)
+
+)
+
+ESCENARIO_NIVEL_3 = (
+
+    (144 * 8, 80 * 8),
+    (144 * 8, 128 * 8),
+    (144 * 8, 168 * 8),
+    (144 * 8, 208 * 8)
+
+)
+
+ESCENARIO_NIVEL_4 = (
+
+        (200 * 8,  80 * 8),
+        (200 * 8,  128 * 8),
+        (200 * 8,  168 * 8),
+        (200 * 8,  208 * 8)
+)
+
+ESCENARIO = [ESCENARIO_NIVEL_1, ESCENARIO_NIVEL_2, ESCENARIO_NIVEL_3, ESCENARIO_NIVEL_4]
+
+COLUMNA_SPRITE = (
+    (0, 32 * 8, 48 * 8, ANCHO, ALTO, 14),
+    (0, 88 * 8, 48 * 8, ANCHO, ALTO, 14),
+    (0, 144 * 8, 48 * 8, ANCHO, ALTO, 14),
+    (0, 200 * 8, 48 * 8, ANCHO, ALTO, 14)
+)
