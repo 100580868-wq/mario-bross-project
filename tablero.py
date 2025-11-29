@@ -6,6 +6,7 @@ from plataformas import Plataforma
 from cintas import Cinta
 from escenario import Escenario
 from paquetes import Paquete
+from camion import Camion
 
 
 class Tablero:
@@ -22,6 +23,7 @@ class Tablero:
         self.dificultad_seleccionada = False
         self.nivel_dificultad = 0
         self.paquete_perdido = False
+        self.paquetes_listos = 0
 
         # creamos una instancia del objeto Mario en las coordenadas indicadas
         self.mario = Mario(constantes.X_INICIAL_MARIO, constantes.Y_INICIAL_MARIO)
@@ -32,8 +34,11 @@ class Tablero:
         # creamos una instancia de la clase Escenario
         self.escenario = Escenario()
 
+        # creamos una instancia de la clase Camion
+        self.camion = Camion(X_INICIAL_CAMION, Y_INICIAL_CAMION)
 
-        self.paquete = Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES)
+        self.lista_paquetes = []
+
         # crea el tablero
         pyxel.init(self.ancho, self.alto, title='Mario Bross')
 
@@ -116,14 +121,16 @@ class Tablero:
         if pyxel.btnp(pyxel.KEY_S):
             self.luigi.mover('abajo', self)
 
-        if self.paquete.estado == 'moviendose':
-            self.paquete.mover_x(self)
-            self.paquete.mover_y(self.mario, self.luigi)
 
-        else:
-            self.paquete_perdido = True
+        # creamos un nuevo paquete si hay menos paquetes en juego que los paquetes mínimos
+        if len(self.lista_paquetes) < constantes.PAQUETES_MINIMOS[self.nivel_dificultad]:
+            self.lista_paquetes.append(Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES))
 
-
+        # le damos movimiento a los paquetes
+        for paquete in self.lista_paquetes:
+            if paquete.estado == 'moviendose':
+                paquete.mover_x(self)
+                paquete.mover_y(self.mario, self.luigi, self)
 
 
     def draw(self):
@@ -149,9 +156,9 @@ class Tablero:
         self.escenario.draw(self)
         self.mario.draw()
         self.luigi.draw()
-
-        if self.paquete.paquetes_en_juego < constantes.PAQUETES_MINIMOS[self.nivel_dificultad]:
-            self.paquete.draw()
+        self.camion.draw(self)
+        for paquete in self.lista_paquetes:
+            paquete.draw()
 
         # TODO
         if self.paquete_perdido:

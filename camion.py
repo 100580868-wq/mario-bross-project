@@ -1,4 +1,6 @@
 import pyxel
+
+import constantes
 from personajes import Personaje
 
 class Camion(Personaje):
@@ -10,6 +12,6 @@ class Camion(Personaje):
     def update(self):
         pass
 
-    def draw(self, num_paquetes_listos):
+    def draw(self, tablero):
 
-        p
+        pyxel.blt(*constantes.SPRITE_CAMION[tablero.paquetes_listos], 14)
