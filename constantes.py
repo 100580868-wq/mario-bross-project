@@ -2,6 +2,7 @@
 usamos este archivo para guardar todas las constantes, para que en el caso de que haya que cambiar una
 nos sea sencillo encontrarla.
 '''
+import random
 
 # medidas del tablero
 
@@ -23,10 +24,12 @@ Y_INICIAL_MARIO = 232
 # estructura: (img bank, u, v, w, h)
 SPRITE_MARIO = (1, 48, 16, 16, 16)
 SPRITE_MARIO_PISO_1 = (1, 48, 0, 16, 16)
+SPRITE_MARIO_DESCANSO = (1, 80, 0, 16, 16)
 
 
 X_INICIAL_LUIGI = 104
 Y_INICIAL_LUIGI = 221
+SPRITE_LUIGI_DESCANSO = (1, 80, 16, 16, 16)
 
 
 SPRITE_LUIGI = (1, 64, 0, 16, 16)
@@ -52,6 +55,9 @@ SPRITE_PAQUETES = (
 PAQUETES_MINIMOS = (1, 1, 1, 1)
 PISOS_IMPARES = ((3,5), (3,5,7), (3,5,7,9), (3,5))
 PISOS_PARES = ((2,4,6), (2,4,6,8), (2,4,6,8,10), (2,4,6))
+
+VELOCIDAD_CINTA_IMPAR = (1, 1.5, 2, random.randint(1, 2))
+VELOCIDAD_CINTA_PAR = (1, 1, 1.5, random.randint(1, 2) )
 
 # escenario
 # hemos creado por cada nivel 4 escenarios distintos que se van intercalando para dar efecto de movimiento
@@ -104,13 +110,13 @@ X_INICIAL_CAMION = 50
 Y_INICIAL_CAMION = 153
 # el camión tiene un sprite por cada paquete recogido
 SPRITE_CAMION = (
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 88, 104, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 88, 136, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 88, 168, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 88, 200, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 128, 104, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 128, 136, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION, 1, 128, 168, 32, 24),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION - 4, 1, 128, 196, 32, 28),
-    (X_INICIAL_CAMION, Y_INICIAL_CAMION - 4, 1, 168, 196, 32, 28),
+    (1, 168, 100, 32, 28),
+    (1, 88, 132, 32, 28),
+    (1, 88, 164, 32, 28),
+    (1, 88, 196, 32, 28),
+    (1, 208, 100, 32, 28),
+    (1, 128, 132, 32, 28),
+    (1, 128, 164, 32, 28),
+    (1, 128, 196, 32, 28),
+    (1, 168, 196, 32, 28),
 )

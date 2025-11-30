@@ -22,14 +22,14 @@ class Paquete(Personaje):
     def mover_x(self, tablero):
         if self.estado == 'moviendose':
 
-            if self.x == (384 //2) -8 and self.modificaciones < 5:
+            if self.x == (384 / 2) -8 and self.modificaciones < 5:
                 self.modificaciones += 1
 
             if self.piso_actual == 1:
                 self.x -= 1
 
             if self.piso_actual in constantes.PISOS_PARES[tablero.nivel_dificultad]:
-                self.x -= 1
+                self.x -= constantes.VELOCIDAD_CINTA_PAR[tablero.nivel_dificultad]
 
             if self.piso_actual in constantes.PISOS_IMPARES[tablero.nivel_dificultad]:
                 self.x += 1
@@ -40,18 +40,22 @@ class Paquete(Personaje):
             if mario.piso_actual == self.piso_actual and self.piso_actual == 1:
                 self.y -= 5
                 self.piso_actual += 1
+                tablero.puntuacion += 1
 
         if self.x > 254:
             if mario.piso_actual == self.piso_actual and self.piso_actual != 1:
                 self.y -= 16
                 self.piso_actual += 1
+                tablero.puntuacion += 1
 
         if self.x < 114:
             if luigi.piso_actual == self.piso_actual and not self.piso_actual == constantes.PISO_LIMITE_LUIGI[tablero.nivel_dificultad]:
                 self.y -= 16
                 self.piso_actual +=1
+                tablero.puntuacion += 1
 
             if  luigi.piso_actual == self.piso_actual and self.piso_actual == constantes.PISO_LIMITE_LUIGI[tablero.nivel_dificultad]:
                 tablero.paquetes_listos += 1
+                tablero.puntuacion += 1
                 tablero.lista_paquetes.remove(self)
 

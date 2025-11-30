@@ -24,15 +24,15 @@ class Personaje:
 
     @x.setter
     def x(self, valor_x):
-        if type(valor_x) != int:
+        if type(valor_x) not in (int, float):
             raise TypeError('el valor de las coordenadas deben ser enteros')
-        if not 0 < valor_x < constantes.ANCHO - 8:
-            raise ValueError(f'el valor de la coordenada x debe estar entre {0} y {constantes.ANCHO - 8}')
+        if not -70 < valor_x < constantes.ANCHO - 8:
+            raise ValueError(f'el valor de la coordenada x debe estar entre {-70} y {constantes.ANCHO - 8}')
         self._x = valor_x
 
     @y.setter
     def y(self, valor_y):
-        if type(valor_y) != int:
+        if type(valor_y) not in (int, float):
             raise TypeError('el valor de las coordenadas deben ser enteros')
         if not 0 < valor_y < constantes.ALTO - 8:
             raise ValueError(f'el valor de la coordenada y debe estar entre {0} y {constantes.ALTO - 8}')
@@ -50,11 +50,17 @@ class Mario(Personaje):
     def update(self):
         pass
 
-    def draw(self):
-        if self.piso_actual == 1:
-            pyxel.blt(self.x, self.y, *constantes.SPRITE_MARIO_PISO_1, 14)
+    def draw(self, camion):
+        if camion.estado != 'operativo':
+            pyxel.blt(310, 201, *constantes.SPRITE_MARIO_DESCANSO , 14)
+
         else:
-            pyxel.blt(self.x, self.y, *self.sprite, 14)
+            if self.piso_actual == 1:
+                pyxel.blt(self.x, self.y, *constantes.SPRITE_MARIO_PISO_1, 14)
+
+            else:
+                pyxel.blt(self.x, self.y, *self.sprite, 14)
+
 
     def mover(self, direccion, tablero):
 
@@ -81,8 +87,13 @@ class Luigi(Personaje):
     def update(self):
         pass
 
-    def draw(self):
-        pyxel.blt(self.x, self.y, *self.sprite, 14)
+    def draw(self, camion):
+        if camion.estado != 'operativo':
+
+            pyxel.blt(40, 233, *constantes.SPRITE_LUIGI_DESCANSO, 14)
+
+        else:
+            pyxel.blt(self.x, self.y, *self.sprite, 14)
 
     def mover(self, direccion, tablero):
 

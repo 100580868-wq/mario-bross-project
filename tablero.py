@@ -24,6 +24,10 @@ class Tablero:
         self.nivel_dificultad = 0
         self.paquete_perdido = False
         self.paquetes_listos = 0
+        self.puntuacion = 0
+        self.contador_reparto = 0
+        self.repartos_realizados = 0
+        self.paquetes_minimos = 1
 
         # creamos una instancia del objeto Mario en las coordenadas indicadas
         self.mario = Mario(constantes.X_INICIAL_MARIO, constantes.Y_INICIAL_MARIO)
@@ -121,9 +125,24 @@ class Tablero:
         if pyxel.btnp(pyxel.KEY_S):
             self.luigi.mover('abajo', self)
 
+        # calculamos los paquetes mínimos
+        if self.nivel_dificultad == 0:
+            # se empieza con 1, cada 50 puntos sumamos 1 extra
+            extras = self.puntuacion // 50
+            self.paquetes_minimos = 1 + extras
+
+        elif self.nivel_dificultad == 1 or self.nivel_dificultad == 2:
+            # se empieza con 1, cada 30 puntos sumamos 1 extra
+            extras = self.puntuacion // 30
+            self.paquetes_minimos = 1 + extras
+
+        elif self.nivel_dificultad == 3:
+            # # se empieza con 1, cada 20 puntos sumamos 1 extra.
+            extras = self.puntuacion // 20
+            self.paquetes_minimos = 1 + extras
 
         # creamos un nuevo paquete si hay menos paquetes en juego que los paquetes mínimos
-        if len(self.lista_paquetes) < constantes.PAQUETES_MINIMOS[self.nivel_dificultad]:
+        if len(self.lista_paquetes) < self.paquetes_minimos:
             self.lista_paquetes.append(Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES))
 
         # le damos movimiento a los paquetes
@@ -131,6 +150,23 @@ class Tablero:
             if paquete.estado == 'moviendose':
                 paquete.mover_x(self)
                 paquete.mover_y(self.mario, self.luigi, self)
+
+        # salida del camión
+        if self.paquetes_listos == 8:
+            self.camion.estado = 'en reparto'
+            self.camion.reparto(self)
+
+        if self.camion.estado != 'operativo':
+            for paquete in self.lista_paquetes:
+                paquete.estado = 'parado'
+
+        if self.camion.estado == 'en reparto':
+            if self.contador_reparto != 300:
+                self.contador_reparto += 1
+
+        if self.contador_reparto == 300:
+            self.camion.estado = 'volviendo'
+            self.camion.reparto(self)
 
 
     def draw(self):
@@ -154,11 +190,12 @@ class Tablero:
 
 
         self.escenario.draw(self)
-        self.mario.draw()
-        self.luigi.draw()
+        self.mario.draw(self.camion)
+        self.luigi.draw(self.camion)
         self.camion.draw(self)
         for paquete in self.lista_paquetes:
             paquete.draw()
+        pyxel.text(250, 5, f'puntuacion {self.puntuacion}', 7)
 
         # TODO
         if self.paquete_perdido:
