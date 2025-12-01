@@ -208,7 +208,8 @@ class Tablero:
         self.luigi.draw(self.camion)
         self.camion.draw(self)
         for paquete in self.lista_paquetes:
-            paquete.draw()
+            if paquete.estado != 'perdido':
+                paquete.draw()
         pyxel.text(250, 5, f'puntuacion {self.puntuacion}', 7)
 
         # TODO
