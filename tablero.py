@@ -28,6 +28,8 @@ class Tablero:
         self.contador_reparto = 0
         self.repartos_realizados = 0
         self.paquetes_minimos = 1
+        self.tiempo_creacion = 0
+        self.cooldown_creacion = 15
 
         # creamos una instancia del objeto Mario en las coordenadas indicadas
         self.mario = Mario(constantes.X_INICIAL_MARIO, constantes.Y_INICIAL_MARIO)
@@ -137,13 +139,25 @@ class Tablero:
             self.paquetes_minimos = 1 + extras
 
         elif self.nivel_dificultad == 3:
-            # # se empieza con 1, cada 20 puntos sumamos 1 extra.
+            # se empieza con 1, cada 20 puntos sumamos 1 extra.
             extras = self.puntuacion // 20
             self.paquetes_minimos = 1 + extras
 
+        # creación de los paquetes
+
+        self.tiempo_creacion += 1
+
         # creamos un nuevo paquete si hay menos paquetes en juego que los paquetes mínimos
         if len(self.lista_paquetes) < self.paquetes_minimos:
-            self.lista_paquetes.append(Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES))
+
+            '''solo permitimos la creación si ha pasado el tiempo de cooldown, esto es para que si se llega a la
+            puntuación necesaria para poner en juego otro paquete, a la vez que cuando se entrega un paquete al
+            camión, que no se creen en el mismo instante y haya dos paquetes uno encima de otro'''
+
+            if self.tiempo_creacion >= self.cooldown_creacion:
+                self.lista_paquetes.append(Paquete(constantes.X_INICIAL_PAQUETES, constantes.Y_INICIAL_PAQUETES))
+                # reiniciamos el cronómetro para dar esos instantes de diferencia entre la creación de un paquete y otro
+                self.tiempo_creacion = 0
 
         # le damos movimiento a los paquetes
         for paquete in self.lista_paquetes:

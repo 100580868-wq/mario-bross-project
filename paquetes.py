@@ -20,10 +20,13 @@ class Paquete(Personaje):
         pyxel.blt(self.x, self.y, *constantes.SPRITE_PAQUETES[self.modificaciones], 14)
 
     def mover_x(self, tablero):
-        if self.estado == 'moviendose':
+        '''hemos tenido que cambiar esta función casi entera al añadir los niveles de dificultad, porque no siempre pasaba
+        por el punto medio al ir sumandole decimales en lugar de enteros'''
 
-            if self.x == (384 / 2) -8 and self.modificaciones < 5:
-                self.modificaciones += 1
+        if self.estado == 'moviendose':
+            # definimos la x en la que se encuentra antes de ejecutarse la función y el pto medio del mapa
+            x_anterior = self.x
+            punto_medio = 184
 
             if self.piso_actual == 1:
                 self.x -= 1
@@ -32,7 +35,20 @@ class Paquete(Personaje):
                 self.x -= constantes.VELOCIDAD_CINTA_PAR[tablero.nivel_dificultad]
 
             if self.piso_actual in constantes.PISOS_IMPARES[tablero.nivel_dificultad]:
-                self.x += 1
+                self.x += constantes.VELOCIDAD_CINTA_IMPAR[tablero.nivel_dificultad]
+
+            # comprobamos que va de derecha a izquierda y que ha pasado por el punto medio, después le sumamos una modificacion
+            if self.piso_actual == 1 or self.piso_actual in constantes.PISOS_PARES[tablero.nivel_dificultad]:
+                if x_anterior > punto_medio and self.x <= punto_medio:
+                    if self.modificaciones < 5:
+                        self.modificaciones += 1
+
+            # comprobamos que va de izquierda a derecha y que ha pasado por el punto medio, después le sumamos una modificacion
+            if self.piso_actual in constantes.PISOS_IMPARES[tablero.nivel_dificultad]:
+                if x_anterior < punto_medio and self.x >= punto_medio:
+                    if self.modificaciones < 5:
+                        self.modificaciones += 1
+
 
     def mover_y(self, mario, luigi, tablero):
 
