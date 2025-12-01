@@ -78,7 +78,7 @@ class Paquete(Personaje):
                 self.estado = 'perdido por mario'
 
 
-        if 264 < self.x < 268:
+        if 259 < self.x < 268:
             if mario.piso_actual == self.piso_actual and self.piso_actual != 1:
                 self.y -= 16
                 self.piso_actual += 1
@@ -87,11 +87,11 @@ class Paquete(Personaje):
                     self.nueva_velocidad = random.randint(1, 2)
 
         # detecta cuando el paquete se encuentra en la X de mario y mario no está en su mismo piso
-        if 264 < self.x < 268 and self.piso_actual in constantes.PISOS_IMPARES[tablero.nivel_dificultad]:
+        if 259 < self.x < 268 and self.piso_actual in constantes.PISOS_IMPARES[tablero.nivel_dificultad]:
             if mario.piso_actual != self.piso_actual:
                 self.estado = 'perdido por mario'
 
-        if self.x < 111:
+        if self.x < 115:
             if luigi.piso_actual == self.piso_actual and not self.piso_actual == constantes.PISO_LIMITE_LUIGI[tablero.nivel_dificultad]:
                 self.y -= 16
                 self.piso_actual +=1
@@ -106,6 +106,6 @@ class Paquete(Personaje):
                 tablero.lista_paquetes.remove(self)
 
         # detecta cuando el paquete se encuentra en la X de luigi y luigi no está en su mismo piso
-        if self.x < 111 and self.piso_actual in constantes.PISOS_PARES[tablero.nivel_dificultad]:
+        if self.x < 115 and self.piso_actual in constantes.PISOS_PARES[tablero.nivel_dificultad]:
             if self.piso_actual != luigi.piso_actual:
                 self.estado = 'perdido por luigi'
