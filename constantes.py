@@ -30,7 +30,7 @@ SPRITE_MARIO_DESCANSO = (1, 80, 0, 16, 16)
 X_INICIAL_LUIGI = 104
 Y_INICIAL_LUIGI = 221
 SPRITE_LUIGI_DESCANSO = (1, 80, 16, 16, 16)
-
+SPRITE_LUIGI_GIRADO = (1, 64, 16, 16, 16)
 
 SPRITE_LUIGI = (1, 64, 0, 16, 16)
 SPRITE_LUIGI_PISO_3 = (1, 64, 16, 16, 16)
@@ -38,6 +38,17 @@ SPRITE_LUIGI_PISO_3 = (1, 64, 16, 16, 16)
 
 PISO_LIMITE_MARIO = (5, 7, 9, 5)
 PISO_LIMITE_LUIGI = (6, 8, 10, 6)
+
+X_JEFE_MARIO = 335
+Y_JEFE_MARIO = 201
+X_JEFE_LUIGI = 15
+Y_JEFE_LUIGI = 233
+
+SPRITE_JEFE_MARIO_1 = (1, 96, 0, 16, 16)
+SPRITE_JEFE_MARIO_2 = (1, 112, 0, 16, 16)
+
+SPRITE_JEFE_LUIGI_1 = (1, 96, 16, 16, 16)
+SPRITE_JEFE_LUIGI_2 = (1, 112, 16, 16, 16)
 
 
 # paquetes
@@ -56,8 +67,8 @@ PAQUETES_MINIMOS = (1, 1, 1, 1)
 PISOS_IMPARES = ((3,5), (3,5,7), (3,5,7,9), (3,5))
 PISOS_PARES = ((2,4,6), (2,4,6,8), (2,4,6,8,10), (2,4,6))
 
-VELOCIDAD_CINTA_IMPAR = (1, 1.5, 2, random.randint(1, 2))
-VELOCIDAD_CINTA_PAR = (1, 1, 1.5, random.randint(1, 2) )
+VELOCIDAD_CINTA_IMPAR = (1, 1.5, 2)
+VELOCIDAD_CINTA_PAR = (1, 1, 1.5)
 
 # escenario
 # hemos creado por cada nivel 4 escenarios distintos que se van intercalando para dar efecto de movimiento
@@ -119,4 +130,14 @@ SPRITE_CAMION = (
     (1, 128, 164, 32, 28),
     (1, 128, 196, 32, 28),
     (1, 168, 196, 32, 28),
+)
+
+NUM_REPARTOS = (3, 5, 5)
+
+# vidas
+SPRITE_VIDAS = (
+    (1, 128, 48, 32, 16),
+    (1, 128, 32, 32, 16),
+    (1, 128, 16, 32, 16),
+    (1, 128, 0, 32, 16)
 )

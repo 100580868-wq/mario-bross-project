@@ -22,28 +22,15 @@ class Escenario:
             for coordenadas in constantes.ESCENARIO[tablero.nivel_dificultad]
         ]
 
-        '''if tablero.nivel_dificultad == 0:
-            self.escenario = ((0, 32 * 8,  80 * 8, constantes.ANCHO, constantes.ALTO),
-                          (0, 32 * 8,  128 * 8, constantes.ANCHO, constantes.ALTO),
-                          (0, 32 * 8,  168 * 8, constantes.ANCHO, constantes.ALTO),
-                          (0, 32 * 8,  208 * 8, constantes.ANCHO, constantes.ALTO))
-
-        elif tablero.nivel_dificultad == 1:
-            self.escenario = ((0, 88 * 8,  80 * 8, constantes.ANCHO, constantes.ALTO),
-                              (0, 88 * 8,  128 * 8, constantes.ANCHO, constantes.ALTO),
-                              (0, 88 * 8,  168 * 8, constantes.ANCHO, constantes.ALTO),
-                              (0, 88 * 8,  208 * 8, constantes.ANCHO, constantes.ALTO))'''
-
-
         # esto muestra en pantalla el tilemap, la estructura es: (x, y, tilemap_id, u, v, w, h)
         pyxel.bltm(0, 0, *self.fondo)
 
         # cada 2 frames se muestra un escenario distinto de la lista creada al principio de la función
-        if tablero.contador_animacion <= 2:
+        if tablero.contador_animacion_fondo <= 2:
             pyxel.bltm(0, 0, 0, *self.escenario[0], 14)
-        elif 2 < tablero.contador_animacion <= 4:
+        elif 2 < tablero.contador_animacion_fondo <= 4:
             pyxel.bltm(0, 0, 0, *self.escenario[1], 14)
-        elif 4 < tablero.contador_animacion <= 6:
+        elif 4 < tablero.contador_animacion_fondo <= 6:
             pyxel.bltm(0, 0, 0, *self.escenario[2], 14)
-        elif 6 < tablero.contador_animacion <= 8:
+        elif 6 < tablero.contador_animacion_fondo <= 8:
             pyxel.bltm(0, 0, 0, *self.escenario[3], 14)

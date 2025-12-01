@@ -47,6 +47,7 @@ class Mario(Personaje):
 
         self.sprite = constantes.SPRITE_MARIO
         self.piso_actual = 1
+
     def update(self):
         pass
 
