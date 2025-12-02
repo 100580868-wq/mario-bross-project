@@ -131,7 +131,7 @@ class Tablero:
         # cada x repartos dependiendo del nivel de dificultad se recupera una vida
         if self.nivel_dificultad != 3:
             objetivo = constantes.NUM_REPARTOS[self.nivel_dificultad]
-            if self.repartos_realizados == objetivo:
+            if self.repartos_realizados == objetivo and self.vidas < 3:
                 self.vidas += 1
                 objetivo += objetivo
 
